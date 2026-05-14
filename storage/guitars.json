@@ -1,0 +1,62 @@
+{
+  "Superstrat": {
+    "woods": ["Вільха", "Липа", "Клен", "Махагоні"],
+    "bridges": ["Floyd Rose", "Gotoh 510", "Evertune"],
+    "frets": ["24", "22"],
+    "colors": ["Чорний", "Білий", "Sunburst", "Червоний", "Синій", "Зелений", "Натуральний"]
+  },
+  "Les-Paul": {
+    "woods": ["Махагоні", "Клен (топ)"],
+    "bridges": ["Tune-o-Matic"],
+    "frets": ["22"],
+    "colors": ["Вишневий Sunburst", "Чорний", "Золотий топ", "Білий", "Медовий Burst"]
+  },
+  "Telecaster": {
+    "woods": ["Ясен", "Вільха"],
+    "bridges": ["Fixed Bridge", "Ashtray"],
+    "frets": ["21", "22"],
+    "colors": ["Чорний", "Білий", "Sunburst", "Блакитний", "Натуральний", "Червоний"]
+  },
+  "SG": {
+    "woods": ["Махагоні", "Волоський горіх"],
+    "bridges": ["Tune-o-Matic", "Vibrato"],
+    "frets": ["22", "24"],
+    "colors": ["Вишневий", "Чорний", "Горіховий", "Білий"]
+  },
+  "Explorer": {
+    "woods": ["Махагоні", "Клен", "Вільха"],
+    "bridges": ["Tune-o-Matic", "Floyd Rose"],
+    "frets": ["22", "24"],
+    "colors": ["Чорний", "Білий", "Натуральний", "Червоний"]
+  },
+  "Flying-V": {
+    "woods": ["Махагоні", "Клен", "Липа"],
+    "bridges": ["Tune-o-Matic", "Floyd Rose"],
+    "frets": ["22", "24"],
+    "colors": ["Чорний", "Білий", "Червоний", "Жовтий"]
+  },
+  "Stratocaster": {
+    "woods": ["Вільха", "Липа", "Ясен"],
+    "bridges": ["Tremolo", "Fixed Bridge"],
+    "frets": ["21", "22"],
+    "colors": ["Sunburst", "Білий", "Чорний", "Блакитний", "Зелений", "Червоний", "Натуральний"]
+  },
+  "Jazzmaster": {
+    "woods": ["Вільха", "Липа", "Ясен"],
+    "bridges": ["Floating Tremolo", "Fixed Bridge"],
+    "frets": ["21", "22"],
+    "colors": ["Sunburst", "Білий", "Блакитний", "Зелений", "Жовтий", "Чорний"]
+  },
+  "V-Shape-(Dean)": {
+    "woods": ["Махагоні", "Клен", "Липа"],
+    "bridges": ["Floyd Rose", "Tune-o-Matic"],
+    "frets": ["22", "24"],
+    "colors": ["Чорний", "Білий", "Червоний", "Камуфляж"]
+  },
+  "Baritone": {
+    "woods": ["Махагоні", "Ясен", "Вільха"],
+    "bridges": ["Fixed Bridge", "Floyd Rose", "Evertune"],
+    "frets": ["24", "26"],
+    "colors": ["Чорний", "Сірий", "Синій", "Натуральний"]
+  }
+}
