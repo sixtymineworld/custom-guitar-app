@@ -1,5 +1,5 @@
 import flet as ft
-from views import login_view, home_view, register_view, orders_view
+from views import login_view, home_view, register_view, orders_view, hero_view
 
 async def main(page: ft.Page):
     pref = ft.SharedPreferences()
@@ -12,11 +12,13 @@ async def main(page: ft.Page):
 
         is_auth = page.session.store.get("authenticated")
 
-        if not is_auth and current_route not in ("/login", "/register"):
+        if not is_auth and current_route not in ("/", "/login", "/register"):
             await page.push_route("/login")
             return
 
-        if current_route == "/login":
+        if current_route == "/":
+            page.views.append(hero_view(page))
+        elif current_route == "/login":
             page.views.append(login_view(page))
         elif current_route == "/register":
             page.views.append(register_view(page))
@@ -38,7 +40,7 @@ async def main(page: ft.Page):
     page.on_route_change = route_change
     page.on_view_pop = view_pop
 
-    initial_route = page.route if page.route else "/login"
+    initial_route = page.route if page.route else "/"
     await route_change(initial_route)
 
-ft.run(main)
+ft.run(main, assets_dir="assets", view=ft.AppView.WEB_BROWSER)

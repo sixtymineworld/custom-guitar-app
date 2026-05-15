@@ -64,6 +64,7 @@ def home_view(page: ft.Page):
                         on_click=logout,
                     ),
                 ],
+                tight=True
             ),
             actions=[ft.TextButton("Закрити", on_click=close_dialog)],
         )
@@ -73,6 +74,8 @@ def home_view(page: ft.Page):
 
     async def go_orders(e):
         await page.push_route("/orders")
+    async def go_hero(e):
+        await page.push_route("/")
 
     def load_data():
         try:
@@ -215,6 +218,11 @@ def home_view(page: ft.Page):
                         icon=ft.Icons.SHOPPING_BASKET_SHARP,
                         icon_color=ft.Colors.YELLOW_ACCENT_400,
                         on_click=go_orders,
+                    ),
+                    ft.IconButton(
+                        icon=ft.Icons.HOME,
+                        icon_color=ft.Colors.YELLOW_ACCENT_400,
+                        on_click=go_hero,
                     ),
                 ],
             ),

@@ -63,8 +63,8 @@ icon_button_STYLE = ft.ButtonStyle(
 
 bottom_appbar_STYLE = dict(
     bgcolor=ft.Colors.GREY_900,
-    height=70,
-    padding=10,
+    height=120,
+    padding=ft.Padding(left=48, right=48, top=16, bottom=12),
 )
 
 COLOR_BLACK = "#000000"
