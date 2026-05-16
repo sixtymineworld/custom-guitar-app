@@ -64,7 +64,8 @@ def home_view(page: ft.Page):
                         on_click=logout,
                     ),
                 ],
-                tight=True
+                tight=True,
+                width=300,
             ),
             actions=[ft.TextButton("Закрити", on_click=close_dialog)],
         )
@@ -76,6 +77,8 @@ def home_view(page: ft.Page):
         await page.push_route("/orders")
     async def go_hero(e):
         await page.push_route("/")
+    async def go_gallery(e):
+        await page.push_route("/gallery")
 
     def load_data():
         try:
@@ -92,12 +95,12 @@ def home_view(page: ft.Page):
 
     GUITARS = load_data()
 
-    dd_wood   = ft.Dropdown(label="Деревина", options=[], width=300)
-    dd_bridge = ft.Dropdown(label="Бридж", options=[], width=300)
-    dd_frets  = ft.Dropdown(label="Кількість ладів", options=[], width=300)
-    dd_color  = ft.Dropdown(label="Колір", options=[], width=300)
+    dd_wood   = ft.Dropdown(label="Деревина", options=[], width=340)
+    dd_bridge = ft.Dropdown(label="Бридж", options=[], width=340)
+    dd_frets  = ft.Dropdown(label="Кількість ладів", options=[], width=340)
+    dd_color  = ft.Dropdown(label="Колір", options=[], width=340)
 
-    result_text = ft.Text("")
+    result_text = ft.Text("", text_align=ft.TextAlign.CENTER)
     selected = {"shape": None}
 
     order_btn = ft.Button(
@@ -114,12 +117,10 @@ def home_view(page: ft.Page):
         shape = e.control.value
         selected["shape"] = shape
         data = GUITARS[shape]
-
         dd_wood.options   = [ft.dropdown.Option(o) for o in data["woods"]]
         dd_bridge.options = [ft.dropdown.Option(o) for o in data["bridges"]]
         dd_frets.options  = [ft.dropdown.Option(o) for o in data["frets"]]
         dd_color.options  = [ft.dropdown.Option(o) for o in data["colors"]]
-
         dd_wood.value = dd_bridge.value = dd_frets.value = dd_color.value = None
         result_text.value = ""
         order_btn.visible = False
@@ -145,18 +146,13 @@ def home_view(page: ft.Page):
         label="Форма гітари",
         options=[ft.dropdown.Option(k) for k in GUITARS],
         on_select=on_shape_select,
-        width=300,
+        width=340,
     )
 
     async def on_order_click(e):
         username = page.session.store.get("current_user")
         shape = selected["shape"]
-
         img_path = os.path.join(ASSETS_DIR, f"{shape}.jpg")
-
-        print(f"ASSETS_DIR: {ASSETS_DIR}")
-        print(f"img_path: {img_path}")
-        print(f"exists: {os.path.exists(img_path)}")
 
         order = {
             "user": username,
@@ -169,7 +165,6 @@ def home_view(page: ft.Page):
         }
         save_order(username, order)
 
-        # скидання полів
         selected["shape"] = None
         dd_shape.value = None
         dd_wood.options = dd_bridge.options = dd_frets.options = dd_color.options = []
@@ -193,7 +188,7 @@ def home_view(page: ft.Page):
             img_dialog = ft.AlertDialog(
                 modal=True,
                 title=ft.Text("Приблизний вигляд", color=ft.Colors.YELLOW_ACCENT_400),
-                content=ft.Image(src=img_path, width=400, height=400),  # ← без fit
+                content=ft.Image(src=img_path, width=400, height=400),
                 actions=[ft.TextButton("Закрити", on_click=close)],
             )
             page.overlay.append(img_dialog)
@@ -209,35 +204,82 @@ def home_view(page: ft.Page):
                 title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400),
                 bgcolor=ft.Colors.GREY_900,
                 actions=[
-                    ft.IconButton(
-                        icon=ft.Icons.SETTINGS,
-                        icon_color=ft.Colors.YELLOW_ACCENT_400,
-                        on_click=show_settings_dialog,
-                    ),
-                    ft.IconButton(
-                        icon=ft.Icons.SHOPPING_BASKET_SHARP,
-                        icon_color=ft.Colors.YELLOW_ACCENT_400,
-                        on_click=go_orders,
-                    ),
-                    ft.IconButton(
-                        icon=ft.Icons.HOME,
-                        icon_color=ft.Colors.YELLOW_ACCENT_400,
-                        on_click=go_hero,
-                    ),
+                    ft.IconButton(icon=ft.Icons.SETTINGS, icon_color=ft.Colors.YELLOW_ACCENT_400, on_click=show_settings_dialog),
+                    ft.IconButton(icon=ft.Icons.SHOPPING_BASKET_SHARP, icon_color=ft.Colors.YELLOW_ACCENT_400, on_click=go_orders),
+                    ft.IconButton(icon=ft.Icons.HOME, icon_color=ft.Colors.YELLOW_ACCENT_400, on_click=go_hero),
+                    ft.IconButton(icon=ft.Icons.MUSIC_NOTE, icon_color=ft.Colors.YELLOW_ACCENT_400, on_click=go_gallery),
                 ],
             ),
-            ft.Column(
-                [
-                    dd_shape,
-                    dd_wood,
-                    dd_bridge,
-                    dd_frets,
-                    dd_color,
-                    result_text,
-                    order_btn,
-                ],
-                scroll=ft.ScrollMode.ADAPTIVE,
+
+            # ── Дропдауни по центру ──
+            ft.Container(
                 expand=True,
+                alignment=ft.Alignment(0, 0),
+                content=ft.Column(
+                    tight=True,
+                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                    scroll=ft.ScrollMode.ADAPTIVE,
+                    controls=[
+                        ft.Text(
+                            "Зберіть свою гітару",
+                            size=24,
+                            weight=ft.FontWeight.BOLD,
+                            color=ft.Colors.YELLOW_ACCENT_400,
+                        ),
+                        ft.Text(
+                            "Оберіть параметри нижче",
+                            size=13,
+                            color=ft.Colors.GREY_500,
+                        ),
+                        ft.Container(height=16),
+                        dd_shape,
+                        dd_wood,
+                        dd_bridge,
+                        dd_frets,
+                        dd_color,
+                        ft.Container(height=8),
+                        result_text,
+                        order_btn,
+                    ],
+                ),
             ),
         ],
+
+        bottom_appbar=ft.BottomAppBar(
+            **bottom_appbar_STYLE,
+            content=ft.Column(
+                spacing=8,
+                controls=[
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                        controls=[
+                            ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400),
+                            ft.Row(
+                                controls=[
+                                    ft.TextButton("Головна", style=ft.ButtonStyle(color=ft.Colors.WHITE), on_click=go_hero),
+                                    ft.TextButton("Каталог", style=ft.ButtonStyle(color=ft.Colors.WHITE), on_click=go_gallery),
+                                    ft.TextButton("Замовлення", style=ft.ButtonStyle(color=ft.Colors.WHITE), on_click=go_orders),
+                                    ft.TextButton("Про нас", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Контакти", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                ]
+                            ),
+                            ft.Row(
+                                controls=[
+                                    ft.IconButton(icon=ft.Icons.FACEBOOK, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
+                                    ft.IconButton(icon=ft.Icons.CAMERA_ALT, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
+                                ]
+                            ),
+                        ],
+                    ),
+                    ft.Divider(color=ft.Colors.GREY_700, height=16),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        controls=[
+                            ft.Text("© 2025 Guitar Custom", size=11, color=ft.Colors.GREY_500),
+                        ],
+                    ),
+                ],
+            ),
+        ),
     )

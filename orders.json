@@ -1,1 +1,13 @@
-{}
+{
+    "q": [
+        {
+            "user": "q",
+            "shape": "Telecaster",
+            "wood": "Ясен",
+            "bridge": "Fixed Bridge",
+            "frets": "21",
+            "color": "Чорний",
+            "image_path": "/Users/dmytrokalitovskyi/Desktop/python project/spring/звіт з практики/assets/Telecaster.jpg"
+        }
+    ]
+}

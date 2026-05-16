@@ -1,5 +1,5 @@
 import flet as ft
-from views import login_view, home_view, register_view, orders_view, hero_view
+from views import login_view, home_view, register_view, orders_view, hero_view, gallery_view
 
 async def main(page: ft.Page):
     pref = ft.SharedPreferences()
@@ -24,6 +24,8 @@ async def main(page: ft.Page):
             page.views.append(register_view(page))
         elif current_route == "/home":
             page.views.append(home_view(page))
+        elif current_route == "/gallery":
+            page.views.append(gallery_view(page))
         elif current_route == "/orders":
             page.views.append(orders_view(page))
         else:

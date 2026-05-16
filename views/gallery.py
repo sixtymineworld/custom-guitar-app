@@ -1,0 +1,196 @@
+import flet as ft
+from models.styles import *
+
+
+GUITARS = [
+    {
+        "name": "Stratocaster",
+        "src": "Stratocaster.jpg",
+        "desc": "Створена Fender у 1954. Три звукознімачі, контурний корпус, улюблениця блюзу та рок-н-ролу.",
+    },
+    {
+        "name": "Les Paul",
+        "src": "Les-Paul.jpg",
+        "desc": "Gibson, 1952. Масивний корпус з махагону, два хамбакери — потужний, теплий звук.",
+    },
+    {
+        "name": "SG",
+        "src": "SG.jpg",
+        "desc": "Gibson, 1961. Тонкий корпус, гострі ріжки — агресивний вигляд і легкий доступ до верхніх ладів.",
+    },
+    {
+        "name": "Telecaster",
+        "src": "Telecaster.jpg",
+        "desc": "Fender, 1950. Перша масова електрогітара. Різкий звук, простота, надійність.",
+    },
+    {
+        "name": "Explorer",
+        "src": "Explorer.jpg",
+        "desc": "Gibson, 1958. Футуристична форма, потужний звук — обрана хард-рок та метал музикантами.",
+    },
+    {
+        "name": "Flying V",
+        "src": "Flying-V.jpg",
+        "desc": "Gibson, 1958. V-подібний корпус став символом хард-року та важкого металу.",
+    },
+    {
+        "name": "Jazzmaster",
+        "src": "Jazzmaster.jpg",
+        "desc": "Fender, 1958. Великий корпус, м'який звук — популярна в джазі та альтернативному році.",
+    },
+    {
+        "name": "Baritone",
+        "src": "Baritone.jpg",
+        "desc": "Довший мензурний, нижчий стрій — улюблениця метал та саундтрек-композиторів.",
+    },
+    {
+        "name": "Superstrat",
+        "src": "Superstrat.jpg",
+        "desc": "80-ті роки. Strat-форма з хамбакером на бриджі — створена для швидкої гри та хай-гейну.",
+    },
+    {
+        "name": "V-Shape (Dean)",
+        "src": "V-Shape-(Dean).jpg",
+        "desc": "Dean, 1977. Екстремальна V-форма, фірмовий знак металу та шред-гітаристів.",
+    },
+]
+
+
+def guitar_card(guitar):
+    return ft.Container(
+        width=260,
+        border_radius=16,
+        bgcolor=ft.Colors.GREY_900,
+        clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
+        content=ft.Column(
+            spacing=0,
+            controls=[
+                ft.Image(
+                    src=guitar["src"],
+                    width=260,
+                    height=200,
+                    fit=ft.BoxFit.COVER,
+                ),
+                ft.Container(
+                    padding=ft.Padding(left=16, right=16, top=12, bottom=16),
+                    content=ft.Column(
+                        spacing=6,
+                        controls=[
+                            ft.Text(
+                                guitar["name"],
+                                style=text_STYLE                            ),
+                            ft.Text(
+                                guitar["desc"],
+                                size=12,
+                                color=ft.Colors.GREY_400,
+                            ),
+                        ],
+                    ),
+                ),
+            ],
+        ),
+    )
+
+
+def gallery_view(page):
+    async def go_home(e):
+        await page.push_route("/home")
+
+    async def go_hero(e):
+        await page.push_route("/")
+
+    cards = ft.Row(
+        wrap=True,
+        spacing=20,
+        run_spacing=20,
+        controls=[guitar_card(g) for g in GUITARS],
+    )
+
+    return ft.View(
+        route="/gallery",
+        bgcolor=ft.Colors.GREY_950 if hasattr(ft.Colors, "GREY_950") else "#0f0f0f",
+        padding=0,
+        controls=[
+            ft.AppBar(
+                **appbar_STYLE,
+                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400),
+                actions=[
+                    ft.IconButton(
+                        icon=ft.Icons.HOME,
+                        tooltip="Головна",
+                        icon_color=ft.Colors.YELLOW_ACCENT_400,
+                        on_click=go_home,
+                    ),
+                    ft.IconButton(
+                        icon=ft.Icons.ARROW_BACK,
+                        tooltip="На початок",
+                        icon_color=ft.Colors.YELLOW_700,
+                        on_click=go_hero,
+                    ),
+                    ft.Container(width=12),
+                ],
+            ),
+
+            ft.Container(
+                expand=True,
+                padding=ft.Padding(left=32, right=32, top=24, bottom=24),
+                content=ft.Column(
+                    scroll=ft.ScrollMode.ADAPTIVE,
+                    expand=True,
+                    controls=[
+                        ft.Text(
+                            "Форми гітар",
+                            size=28,
+                            weight=ft.FontWeight.BOLD,
+                            color=ft.Colors.WHITE,
+                        ),
+                        ft.Text(
+                            "Обери форму та дізнайся її історію",
+                            size=14,
+                            color=ft.Colors.GREY_500,
+                        ),
+                        ft.Container(height=16),
+                        cards,
+                    ],
+                ),
+            ),
+        ],
+
+        bottom_appbar=ft.BottomAppBar(
+            **bottom_appbar_STYLE,
+            content=ft.Column(
+                spacing=8,
+                controls=[
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                        controls=[
+                            ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400),
+                            ft.Row(
+                                controls=[
+                                    ft.TextButton("Головна", style=ft.ButtonStyle(color=ft.Colors.WHITE), on_click=go_hero),
+                                    ft.TextButton("Каталог", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Замовлення", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Про нас", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Контакти", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                ]
+                            ),
+                            ft.Row(
+                                controls=[
+                                    ft.IconButton(icon=ft.Icons.FACEBOOK, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
+                                    ft.IconButton(icon=ft.Icons.CAMERA_ALT, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
+                                ]
+                            ),
+                        ],
+                    ),
+                    ft.Divider(color=ft.Colors.GREY_700, height=16),
+                    ft.Row(
+                        alignment=ft.MainAxisAlignment.CENTER,
+                        controls=[
+                            ft.Text("© 2025 Guitar Custom", size=11, color=ft.Colors.GREY_500),
+                        ],
+                    ),
+                ],
+            ),
+        ),
+    )
