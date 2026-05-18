@@ -13,7 +13,6 @@ def hero_view(page: ft.Page):
     def build(e=None):
         is_mobile = page.width < 600
 
-        # ── BOTTOM APPBAR CONTENT ──
         if is_mobile:
             bottom_content = ft.Column(
                 spacing=4,
@@ -28,10 +27,10 @@ def hero_view(page: ft.Page):
                             ft.IconButton(icon=ft.Icons.SHOPPING_BASKET_SHARP, icon_color=ft.Colors.YELLOW_700, style=icon_button_STYLE),
                             ft.IconButton(icon=ft.Icons.INFO_OUTLINE, icon_color=ft.Colors.YELLOW_700, style=icon_button_STYLE),
                             ft.IconButton(icon=ft.Icons.FACEBOOK, icon_color=ft.Colors.YELLOW_700, style=icon_button_STYLE),
-                            ft.IconButton(icon=ft.Icons.CAMERA_ALT, icon_color=ft.Colors.YELLOW_700, style=icon_button_STYLE),
+                            ft.IconButton(icon=ft.Icons.MAIL, icon_color=ft.Colors.YELLOW_700, style=icon_button_STYLE),
                         ],
                     ),
-                    ft.Text("© 2025 Guitar Custom", size=10, color=ft.Colors.GREY_500),
+                    ft.Text("© 2026 Guitar Custom", size=10, color=ft.Colors.GREY_500),
                 ],
             )
         else:
@@ -48,14 +47,12 @@ def hero_view(page: ft.Page):
                                     ft.TextButton("Головна", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
                                     ft.TextButton("Каталог", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
                                     ft.TextButton("Замовлення", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                    ft.TextButton("Про нас", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                    ft.TextButton("Контакти", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
                                 ]
                             ),
                             ft.Row(
                                 controls=[
-                                    ft.IconButton(icon=ft.Icons.FACEBOOK, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
-                                    ft.IconButton(icon=ft.Icons.CAMERA_ALT, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
+                                    ft.IconButton(icon=ft.Icons.FACEBOOK, icon_color=ft.Colors.WHITE, style=icon_button_STYLE, url='https://www.facebook.com/'),
+                                    ft.IconButton(icon=ft.Icons.MAIL, icon_color=ft.Colors.WHITE, style=icon_button_STYLE, url='https://mail.google.com/'),
                                 ]
                             ),
                         ],
@@ -64,7 +61,7 @@ def hero_view(page: ft.Page):
                     ft.Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("© 2025 Guitar Custom", size=11, color=ft.Colors.GREY_500),
+                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500),
                         ],
                     ),
                 ],
@@ -87,8 +84,8 @@ def hero_view(page: ft.Page):
                 expand=True,
                 controls=[
                     ft.Image(
-                        src="hero.png",
-                        fit=ft.BoxFit.COVER if is_mobile else ft.BoxFit.CONTAIN,
+                        src="hero_mobile.png" if is_mobile else "hero.png",
+                        fit=ft.BoxFit.COVER,
                         expand=True,
                         width=float("inf"),
                         height=float("inf"),
@@ -104,7 +101,7 @@ def hero_view(page: ft.Page):
                     ft.Container(
                         alignment=ft.Alignment(0, 1),
                         padding=ft.Padding.only(bottom=24 if is_mobile else 32),
-                        content=ft.ElevatedButton(
+                        content=ft.Button(
                             "Перейти до реєстрації",
                             icon=ft.Icons.ARROW_FORWARD,
                             style=btn_style,

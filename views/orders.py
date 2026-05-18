@@ -39,14 +39,16 @@ def orders_view(page):
         cards = []
         for i, order in enumerate(user_orders, 1):
 
-            img_control = None
             img_path = order.get("image_path")
-            if img_path and os.path.exists(img_path):
+            img_control = None
+            if img_path:
+                img_src = os.path.basename(img_path)
                 img_control = ft.Container(
                     content=ft.Image(
-                        src=img_path,
+                        src=img_src,
                         width=260,
                         height=260,
+                        fit=ft.BoxFit.CONTAIN,
                     ),
                 )
 

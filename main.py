@@ -1,7 +1,7 @@
 import flet as ft
 from views import login_view, home_view, register_view, orders_view, hero_view, gallery_view
 
-async def main(page: ft.Page):
+async def main(page):
     pref = ft.SharedPreferences()
     saved_theme = await pref.get("theme")
     page.theme_mode = ft.ThemeMode.DARK if saved_theme == "dark" else ft.ThemeMode.LIGHT

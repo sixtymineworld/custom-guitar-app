@@ -78,7 +78,7 @@ def guitar_card(guitar):
                         controls=[
                             ft.Text(
                                 guitar["name"],
-                                style=text_STYLE                            ),
+                                style=text_STYLE),
                             ft.Text(
                                 guitar["desc"],
                                 size=12,
@@ -99,6 +99,57 @@ def gallery_view(page):
     async def go_hero(e):
         await page.push_route("/")
 
+    async def show_settings_dialog(e):
+        prefs = ft.SharedPreferences()
+        saved_theme = await prefs.get("theme")
+        page.theme_mode = ft.ThemeMode.DARK if saved_theme == "dark" else ft.ThemeMode.LIGHT
+
+        async def toggle_theme(e):
+            if page.theme_mode == ft.ThemeMode.DARK:
+                page.theme_mode = ft.ThemeMode.LIGHT
+                await prefs.set("theme", "light")
+            else:
+                page.theme_mode = ft.ThemeMode.DARK
+                await prefs.set("theme", "dark")
+            page.update()
+
+        async def logout(e):
+            page.session.store.clear()
+            page.theme_mode = ft.ThemeMode.LIGHT
+            await page.push_route("/login")
+
+        theme_switch = ft.Switch(
+            label="Темна тема" if page.theme_mode == ft.ThemeMode.DARK else "Світла тема",
+            value=(page.theme_mode == ft.ThemeMode.DARK),
+            on_change=toggle_theme,
+        )
+
+        async def close_dialog(e):
+            dialog.open = False
+            page.update()
+
+        dialog = ft.AlertDialog(
+            modal=True,
+            title=ft.Text("Налаштування"),
+            content=ft.Column(
+                [
+                    theme_switch,
+                    ft.Divider(),
+                    ft.Button("Вийти з акаунту",
+                              color=ft.Colors.RED,
+                              icon=ft.Icons.LOGOUT,
+                              on_click=logout,
+                    ),
+                ],
+                tight=True,
+                width=300,
+            ),
+            actions=[ft.TextButton("Закрити", on_click=close_dialog)],
+        )
+        page.overlay.append(dialog)
+        dialog.open = True
+        page.update()
+
     cards = ft.Row(
         wrap=True,
         spacing=20,
@@ -108,7 +159,6 @@ def gallery_view(page):
 
     return ft.View(
         route="/gallery",
-        bgcolor=ft.Colors.GREY_950 if hasattr(ft.Colors, "GREY_950") else "#0f0f0f",
         padding=0,
         controls=[
             ft.AppBar(
@@ -127,6 +177,11 @@ def gallery_view(page):
                         icon_color=ft.Colors.YELLOW_700,
                         on_click=go_hero,
                     ),
+                    ft.IconButton(
+                        icon=ft.Icons.SETTINGS,
+                        icon_color=ft.Colors.YELLOW_ACCENT_400,
+                        tooltip="Налаштування",
+                        on_click=show_settings_dialog),
                     ft.Container(width=12),
                 ],
             ),
@@ -142,12 +197,10 @@ def gallery_view(page):
                             "Форми гітар",
                             size=28,
                             weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.WHITE,
                         ),
                         ft.Text(
                             "Обери форму та дізнайся її історію",
                             size=14,
-                            color=ft.Colors.GREY_500,
                         ),
                         ft.Container(height=16),
                         cards,
@@ -168,17 +221,25 @@ def gallery_view(page):
                             ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400),
                             ft.Row(
                                 controls=[
-                                    ft.TextButton("Головна", style=ft.ButtonStyle(color=ft.Colors.WHITE), on_click=go_hero),
-                                    ft.TextButton("Каталог", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                    ft.TextButton("Замовлення", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                    ft.TextButton("Про нас", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                    ft.TextButton("Контакти", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Головна",
+                                                  style=ft.ButtonStyle(color=ft.Colors.WHITE),
+                                                  on_click=go_hero),
+                                    ft.TextButton("Каталог",
+                                                  style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Замовлення",
+                                                  style=ft.ButtonStyle(color=ft.Colors.WHITE)),
                                 ]
                             ),
                             ft.Row(
                                 controls=[
-                                    ft.IconButton(icon=ft.Icons.FACEBOOK, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
-                                    ft.IconButton(icon=ft.Icons.CAMERA_ALT, icon_color=ft.Colors.WHITE, style=icon_button_STYLE),
+                                    ft.IconButton(icon=ft.Icons.FACEBOOK,
+                                                  icon_color=ft.Colors.WHITE,
+                                                  style=icon_button_STYLE,
+                                                  url='https://www.facebook.com/'),
+                                    ft.IconButton(icon=ft.Icons.MAIL,
+                                                  icon_color=ft.Colors.WHITE,
+                                                  style=icon_button_STYLE,
+                                                  url='https://mail.google.com/'),
                                 ]
                             ),
                         ],
@@ -187,7 +248,7 @@ def gallery_view(page):
                     ft.Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("© 2025 Guitar Custom", size=11, color=ft.Colors.GREY_500),
+                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500),
                         ],
                     ),
                 ],
