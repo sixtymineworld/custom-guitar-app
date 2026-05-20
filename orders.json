@@ -1,130 +1,22 @@
 {
-    "q": [
+    "vasya": [
         {
-            "user": "q",
-            "shape": "Telecaster",
-            "wood": "Ясен",
-            "bridge": "Fixed Bridge",
-            "frets": "21",
+            "user": "vasya",
+            "shape": "Les-Paul",
+            "wood": "Махагоні",
+            "bridge": "Tune-o-Matic",
+            "frets": "22",
             "color": "Чорний",
-            "image_path": "/Users/dmytrokalitovskyi/Desktop/python project/spring/звіт з практики/assets/Telecaster.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Superstrat",
-            "wood": "Вільха",
-            "bridge": "Floyd Rose",
-            "frets": "22",
-            "color": "Натуральний",
-            "image_path": "/Users/dmytrokalitovskyi/Desktop/python project/spring/звіт з практики/assets/Superstrat.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Superstrat",
-            "wood": "Вільха",
-            "bridge": "Gotoh 510",
-            "frets": "22",
-            "color": "Натуральний",
-            "image_path": "/Users/dmytrokalitovskyi/Desktop/python project/spring/звіт з практики/assets/Superstrat.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Les-Paul",
-            "wood": "Махагоні",
-            "bridge": "Tune-o-Matic",
-            "frets": "22",
-            "color": "Вишневий Sunburst",
-            "image_path": "/Users/dmytrokalitovskyi/Desktop/python project/spring/звіт з практики/assets/Les-Paul.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Superstrat",
-            "wood": "Вільха",
-            "bridge": "Floyd Rose",
-            "frets": "24",
-            "color": "Натуральний",
-            "image_path": "Superstrat.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Telecaster",
-            "wood": "Вільха",
-            "bridge": "Fixed Bridge",
-            "frets": "21",
-            "color": "Червоний",
-            "image_path": "Telecaster.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Les-Paul",
-            "wood": "Махагоні",
-            "bridge": "Tune-o-Matic",
-            "frets": "22",
-            "color": "Вишневий Sunburst",
             "image_path": "Les-Paul.jpg"
         },
         {
-            "user": "q",
-            "shape": "Superstrat",
-            "wood": "Вільха",
-            "bridge": "Floyd Rose",
-            "frets": "22",
-            "color": "Натуральний",
-            "image_path": "Superstrat.jpg"
-        },
-        {
-            "user": "q",
+            "user": "vasya",
             "shape": "Superstrat",
             "wood": "Вільха",
             "bridge": "Floyd Rose",
             "frets": "24",
-            "color": "Зелений",
+            "color": "Білий",
             "image_path": "Superstrat.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Telecaster",
-            "wood": "Ясен",
-            "bridge": "Fixed Bridge",
-            "frets": "21",
-            "color": "Натуральний",
-            "image_path": "Telecaster.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Jazzmaster",
-            "wood": "Липа",
-            "bridge": "Floating Tremolo",
-            "frets": "21",
-            "color": "Sunburst",
-            "image_path": "Jazzmaster.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "V-Shape-(Dean)",
-            "wood": "Клен",
-            "bridge": "Floyd Rose",
-            "frets": "22",
-            "color": "Чорний",
-            "image_path": "V-Shape-(Dean).jpg"
-        },
-        {
-            "user": "q",
-            "shape": "Stratocaster",
-            "wood": "Липа",
-            "bridge": "Fixed Bridge",
-            "frets": "21",
-            "color": "Sunburst",
-            "image_path": "Stratocaster.jpg"
-        },
-        {
-            "user": "q",
-            "shape": "SG",
-            "wood": "Махагоні",
-            "bridge": "Tune-o-Matic",
-            "frets": "22",
-            "color": "Чорний",
-            "image_path": "SG.jpg"
         }
     ]
 }

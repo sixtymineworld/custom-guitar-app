@@ -172,12 +172,6 @@ def gallery_view(page):
                         on_click=go_home,
                     ),
                     ft.IconButton(
-                        icon=ft.Icons.ARROW_BACK,
-                        tooltip="На початок",
-                        icon_color=ft.Colors.YELLOW_700,
-                        on_click=go_hero,
-                    ),
-                    ft.IconButton(
                         icon=ft.Icons.SETTINGS,
                         icon_color=ft.Colors.YELLOW_ACCENT_400,
                         tooltip="Налаштування",

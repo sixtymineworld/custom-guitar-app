@@ -4,7 +4,7 @@ btn_style = ft.ButtonStyle(
     bgcolor={
         ft.ControlState.HOVERED: ft.Colors.YELLOW_ACCENT_100,
         ft.ControlState.DEFAULT: ft.Colors.YELLOW_ACCENT_700,
-        },
+    },
     color=ft.Colors.BLACK,
     padding=12,
     shape=ft.RoundedRectangleBorder(radius=8),
@@ -18,54 +18,62 @@ button_STYLE = ft.ButtonStyle(
 )
 
 textfield_STYLE = dict(
-    bgcolor=ft.Colors.GREY_900,
-    border_color=ft.Colors.YELLOW_700,
-    focused_border_color=ft.Colors.YELLOW_ACCENT_400,
-    color=ft.Colors.WHITE,
-    cursor_color=ft.Colors.YELLOW_ACCENT_400,
+    bgcolor="#111111",
+    border_color="#FFD700",
+    focused_border_color="#FFEA00",
+    color="#FFD700",
+    cursor_color="#FFEA00",
     border_radius=5,
-    label_style=ft.TextStyle(color=ft.Colors.YELLOW),
+    label_style=ft.TextStyle(color="#FFC200"),
 )
 
 text_STYLE = dict(
     weight=ft.FontWeight.BOLD,
-    color=ft.Colors.YELLOW_700,
+    color="#FFD700",
     font_family='Segoe UI',
 )
 
 error_text_STYLE = dict(
     size=12,
     weight=ft.FontWeight.W_900,
-    color=ft.Colors.ORANGE_ACCENT_400,
+    color="#FF6F00",
     font_family='Consolas',
 )
-dropdown_STYLE = dict(
-    bgcolor=ft.Colors.GREY_900,
-    border_color=ft.Colors.YELLOW_700,
-    focused_border_color=ft.Colors.YELLOW_ACCENT_400,
-    color=ft.Colors.WHITE,
-    border_radius=5,
-    label_style=ft.TextStyle(color=ft.Colors.YELLOW),
-    text_style=ft.TextStyle(color=ft.Colors.WHITE),
-)
 
-appbar_STYLE = dict(
-    bgcolor=ft.Colors.GREY_900,
-    center_title=True,
-    elevation=4,
-)
 icon_button_STYLE = ft.ButtonStyle(
     color={
-        ft.ControlState.HOVERED: ft.Colors.YELLOW_ACCENT_400,
-        ft.ControlState.DEFAULT: ft.Colors.YELLOW_700,
+        ft.ControlState.HOVERED: "#FFEA00",
+        ft.ControlState.DEFAULT: "#FFD700",
     },
 )
 
+appbar_STYLE = dict(
+    bgcolor=ft.Colors.with_opacity(0.85, "#1A1200"),
+    center_title=True,
+    elevation=12,
+    shadow_color="#FFD700",
+)
+
 bottom_appbar_STYLE = dict(
-    bgcolor=ft.Colors.GREY_900,
+    bgcolor=ft.Colors.with_opacity(0.92, "#0D0D00"),
     height=120,
     padding=ft.Padding(left=48, right=48, top=16, bottom=12),
 )
 
-COLOR_BLACK = "#000000"
-COLOR_YELLOW = "#FFD700"
+
+SOFT_BG_GRADIENT = ft.Container(
+    expand=True,
+    gradient=ft.LinearGradient(
+        begin=ft.Alignment.TOP_CENTER,
+        end=ft.Alignment.BOTTOM_CENTER,
+        colors=[
+            "#000000",
+            "#0D0D00",  
+            "#1A1A00", 
+            "#2E2A00",  
+            "#0D0D00", 
+            "#000000",  
+        ],
+        stops=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+    ),
+)
