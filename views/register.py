@@ -10,8 +10,6 @@ def register_view(page):
             return {}
         with open('users.json', "r", encoding="utf-8") as f:
             return json.load(f)
-        
-    users_db = load_users()
 
     def save_users(users):
         with open('users.json', "w", encoding="utf-8") as f:
@@ -19,13 +17,14 @@ def register_view(page):
 
     def validate_password(password):
         if len(password) < 6:
-            message.value = "Потрібно мінімум 6 символів"
+            return "Потрібно мінімум 6 символів"
         if not re.search(r'[a-z]', password):
-            message.value = "Потрібно хоча б одна мала літера"
+            return "Потрібно хоча б одна мала літера"
         if not re.search(r'[A-Z]', password):
-            message.value = "Потрібно хоча б одна велика літера"
+            return "Потрібно хоча б одна велика літера"
         if not re.search(r'\d', password):
-            message.value = "Потрібно хоча б одна цифра"
+            return "Потрібно хоча б одна цифра"
+        return None
 
     async def go_login(e):
         await page.push_route("/login")
@@ -35,10 +34,10 @@ def register_view(page):
         password = password_user.value
         confirm  = confirm_user.value
 
-        name_user.error_text = None
+        name_user.error_text     = None
         password_user.error_text = None
-        confirm_user.error_text = None
-        message.value = ""
+        confirm_user.error_text  = None
+        message.value            = ""
 
         has_error = False
 
@@ -50,9 +49,9 @@ def register_view(page):
             password_user.error_text = "Введіть пароль"
             has_error = True
         else:
-            errs = validate_password(password)
-            if errs:
-                password_user.error_text = "Пароль має містити: " + ", ".join(errs)
+            validation_message = validate_password(password)
+            if validation_message:
+                password_user.error_text = validation_message
                 has_error = True
 
         if not confirm:
@@ -63,6 +62,7 @@ def register_view(page):
             has_error = True
 
         if not has_error:
+            users_db = load_users()
             if username in users_db:
                 message.value = "Користувач вже існує!"
             else:
@@ -73,13 +73,13 @@ def register_view(page):
 
         page.update()
 
-    title = ft.Text('Вікно реєстрації', size=32, **text_STYLE)
-    backtext = ft.Text('Введіть будь ласка свої дані, щоб ввійти в систему', size=14, **text_STYLE)
-    name_user = ft.TextField(label='Введіть своє імʼя',  prefix_icon=ft.Icons.PERSON,   hint_text='vasya_pupkin', **textfield_STYLE)
-    password_user = ft.TextField(label='Введіть пароль',     prefix_icon=ft.Icons.PASSWORD, hint_text='qwerty123',    password=True, can_reveal_password=True, **textfield_STYLE)
-    confirm_user = ft.TextField(label='Підтвердіть пароль', prefix_icon=ft.Icons.PASSWORD, hint_text='qwerty123',    password=True, can_reveal_password=True, **textfield_STYLE)
-    accept_button = ft.Button('Підтвердити', on_click=register_click, style=btn_style)
-    message = ft.Text('', **error_text_STYLE)
+    title = ft.Text("Вікно реєстрації", size=32, **text_STYLE)
+    backtext = ft.Text("Введіть будь ласка свої дані, щоб ввійти в систему", size=14, **text_STYLE)
+    name_user = ft.TextField(label="Введіть своє імʼя",  prefix_icon=ft.Icons.PERSON,   hint_text="dmytro_kalitovskyi", **textfield_STYLE)
+    password_user = ft.TextField(label="Введіть пароль",     prefix_icon=ft.Icons.PASSWORD, hint_text="Qwerty123",    password=True, can_reveal_password=True, **textfield_STYLE)
+    confirm_user = ft.TextField(label="Підтвердіть пароль", prefix_icon=ft.Icons.PASSWORD, hint_text="Qwerty123",    password=True, can_reveal_password=True, **textfield_STYLE)
+    accept_button = ft.Button("Підтвердити", on_click=register_click, style=btn_style)
+    message = ft.Text("", **error_text_STYLE)
 
     return ft.View(
         route="/",
@@ -95,4 +95,5 @@ def register_view(page):
             accept_button,
             ft.TextButton("Вже є акаунт? Увійти", on_click=go_login, style=button_STYLE),
             message,
-        ])
+        ]
+    )

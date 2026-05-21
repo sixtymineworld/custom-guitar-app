@@ -17,7 +17,7 @@ def hero_view(page: ft.Page):
         controls=[
             ft.AppBar(
                 **appbar_STYLE,
-                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400),
+                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
                 actions=[
                     ft.TextButton("Увійти", style=button_STYLE, on_click=go_login),
                     ft.Container(width=12),
@@ -44,7 +44,7 @@ def hero_view(page: ft.Page):
                     ),
                     ft.Container(
                         alignment=ft.Alignment(0, 1),
-                        padding=ft.Padding.only(bottom=32),
+                        padding=ft.Padding(bottom=32),
                         content=ft.Button(
                             "Перейти до реєстрації",
                             icon=ft.Icons.ARROW_FORWARD,
@@ -84,11 +84,11 @@ def hero_view(page: ft.Page):
                                     ft.IconButton(icon=ft.Icons.FACEBOOK,
                                                   icon_color=ft.Colors.WHITE,
                                                   style=icon_button_STYLE,
-                                                  url='https://www.facebook.com/'),
-                                    ft.IconButton(icon=ft.Icons.MAIL,
+                                                  url='https://www.facebook.com/groups/1548580592066473/'),
+                                    ft.IconButton(icon=ft.Icons.PLAY_CIRCLE,
                                                   icon_color=ft.Colors.WHITE,
                                                   style=icon_button_STYLE,
-                                                  url='https://mail.google.com/'),
+                                                  url='https://www.youtube.com/@CrimsonCustomGuitars'),
                                 ]
                             ),
                         ],

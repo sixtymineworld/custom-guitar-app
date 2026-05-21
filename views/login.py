@@ -37,8 +37,8 @@ def login_view(page):
 
     title = ft.Text('Вітаємо у нашому магазині!', size=32, **text_STYLE)
     backtext = ft.Text('Введіть будь ласка свої дані, щоб ввійти в систему', size=14, **text_STYLE)
-    name_user = ft.TextField(label='Введіть своє імʼя', prefix_icon=ft.Icons.PERSON, hint_text='vasya_pupkin', **textfield_STYLE)
-    password_user = ft.TextField(label='Введіть пароль', prefix_icon=ft.Icons.PASSWORD,password=True, hint_text='qwerty123', can_reveal_password=True, **textfield_STYLE)
+    name_user = ft.TextField(label='Введіть своє імʼя', prefix_icon=ft.Icons.PERSON, hint_text='dmytro_kalitovskyi', **textfield_STYLE)
+    password_user = ft.TextField(label='Введіть пароль', prefix_icon=ft.Icons.PASSWORD,password=True, hint_text='Qwerty123', can_reveal_password=True, **textfield_STYLE)
     accept_button = ft.Button('Підтвердити', on_click=login_click, style=btn_style)
     message = ft.Text('', **error_text_STYLE)
 

@@ -5,6 +5,9 @@ async def main(page):
     pref = ft.SharedPreferences()
     saved_theme = await pref.get("theme")
     page.theme_mode = ft.ThemeMode.DARK if saved_theme == "dark" else ft.ThemeMode.LIGHT
+    page.fonts = {
+        "AppleGaramond": "AppleGaramond.ttf"
+    }
 
     async def route_change(e):
         current_route = e.route if hasattr(e, "route") else e
@@ -16,14 +19,15 @@ async def main(page):
             await page.push_route("/login")
             return
 
-        if current_route == "/":
+        if current_route == "/home":
+            page.views.append(home_view(page))
+            page.bgcolor = "#000000" if page.theme_mode == ft.ThemeMode.DARK else "#fffff0"
+        elif current_route == "/":
             page.views.append(hero_view(page))
         elif current_route == "/login":
             page.views.append(login_view(page))
         elif current_route == "/register":
             page.views.append(register_view(page))
-        elif current_route == "/home":
-            page.views.append(home_view(page))
         elif current_route == "/gallery":
             page.views.append(gallery_view(page))
         elif current_route == "/orders":

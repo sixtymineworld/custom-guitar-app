@@ -23,6 +23,41 @@ def save_order(username, order):
 
 
 def home_view(page: ft.Page):
+    bg_container = ft.Ref[ft.Container]()
+
+    def get_gradient():
+        if page.theme_mode == ft.ThemeMode.DARK:
+            return ft.LinearGradient(
+                begin=ft.Alignment(0, -1),
+                end=ft.Alignment(0, 1),
+                colors=[
+                    "#000000",
+                    "#0D0D00",
+                    "#1A1A00",
+                    "#2E2A00",
+                    "#0D0D00",
+                    "#000000",
+                ],
+                stops=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+            )
+        else:
+            return ft.LinearGradient(
+                begin=ft.Alignment(0, -1),
+                end=ft.Alignment(0, 1),
+                colors=[
+                    "#fffff0",
+                    "#fffde7",
+                    "#fff9c4",
+                    "#fff59d",
+                    "#fffde7",
+                    "#ffffff",
+                ],
+                stops=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
+            )
+
+    def get_page_bgcolor():
+        return "#000000" if page.theme_mode == ft.ThemeMode.DARK else "#fffff0"
+
     async def show_settings_dialog(e):
         prefs = ft.SharedPreferences()
         saved_theme = await prefs.get("theme")
@@ -35,11 +70,15 @@ def home_view(page: ft.Page):
             else:
                 page.theme_mode = ft.ThemeMode.DARK
                 await prefs.set("theme", "dark")
+
+            bg_container.current.gradient = get_gradient()
+            page.bgcolor = get_page_bgcolor()
             page.update()
 
         async def logout(e):
             page.session.store.clear()
             page.theme_mode = ft.ThemeMode.LIGHT
+            page.bgcolor = get_page_bgcolor()
             await page.push_route("/login")
 
         theme_switch = ft.Switch(
@@ -59,10 +98,11 @@ def home_view(page: ft.Page):
                 [
                     theme_switch,
                     ft.Divider(),
-                    ft.Button("Вийти з акаунту",
-                              color=ft.Colors.RED,
-                              icon=ft.Icons.LOGOUT,
-                              on_click=logout,
+                    ft.Button(
+                        "Вийти з акаунту",
+                        color=ft.Colors.RED,
+                        icon=ft.Icons.LOGOUT,
+                        on_click=logout,
                     ),
                 ],
                 tight=True,
@@ -98,10 +138,10 @@ def home_view(page: ft.Page):
 
     GUITARS = load_data()
 
-    dd_wood = ft.Dropdown(label="Деревина", options=[], width=340)
+    dd_wood   = ft.Dropdown(label="Деревина", options=[], width=340)
     dd_bridge = ft.Dropdown(label="Бридж", options=[], width=340)
-    dd_frets = ft.Dropdown(label="Кількість ладів", options=[], width=340)
-    dd_color = ft.Dropdown(label="Колір", options=[], width=340)
+    dd_frets  = ft.Dropdown(label="Кількість ладів", options=[], width=340)
+    dd_color  = ft.Dropdown(label="Колір", options=[], width=340)
 
     result_text = ft.Text("", text_align=ft.TextAlign.CENTER)
     selected = {"shape": None}
@@ -117,10 +157,10 @@ def home_view(page: ft.Page):
         shape = e.control.value
         selected["shape"] = shape
         data = GUITARS[shape]
-        dd_wood.options = [ft.DropdownOption(o) for o in data["woods"]]
+        dd_wood.options   = [ft.DropdownOption(o) for o in data["woods"]]
         dd_bridge.options = [ft.DropdownOption(o) for o in data["bridges"]]
-        dd_frets.options = [ft.DropdownOption(o) for o in data["frets"]]
-        dd_color.options = [ft.DropdownOption(o) for o in data["colors"]]
+        dd_frets.options  = [ft.DropdownOption(o) for o in data["frets"]]
+        dd_color.options  = [ft.DropdownOption(o) for o in data["colors"]]
         dd_wood.value = dd_bridge.value = dd_frets.value = dd_color.value = None
         result_text.value = ""
         order_btn.visible = False
@@ -151,16 +191,16 @@ def home_view(page: ft.Page):
 
     async def on_order_click(e):
         username = page.session.store.get("current_user")
-        shape = selected["shape"]
-        img_src = f"{shape}.jpg"
+        shape    = selected["shape"]
+        img_src  = f"{shape}.jpg"
 
         order = {
-            "user": username,
-            "shape": shape,
-            "wood": dd_wood.value,
-            "bridge": dd_bridge.value,
-            "frets": dd_frets.value,
-            "color": dd_color.value,
+            "user":       username,
+            "shape":      shape,
+            "wood":       dd_wood.value,
+            "bridge":     dd_bridge.value,
+            "frets":      dd_frets.value,
+            "color":      dd_color.value,
             "image_path": img_src,
         }
         save_order(username, order)
@@ -187,10 +227,8 @@ def home_view(page: ft.Page):
             title=ft.Text("Замовлення прийнято! 🎸", color=ft.Colors.YELLOW_ACCENT_400),
             content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень."),
             actions=[
-                ft.TextButton("Переглянути",
-                              on_click=go_to_orders),
-                ft.TextButton("Закрити",
-                              on_click=close),
+                ft.TextButton("Переглянути", on_click=go_to_orders),
+                ft.TextButton("Закрити",     on_click=close),
             ],
         )
         page.overlay.append(img_dialog)
@@ -201,10 +239,12 @@ def home_view(page: ft.Page):
 
     return ft.View(
         route="/home",
+        bgcolor=ft.Colors.TRANSPARENT,
+        padding=0,
         controls=[
             ft.AppBar(
-                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400),
-                bgcolor=ft.Colors.GREY_900,
+                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
+                **appbar_STYLE,
                 actions=[
                     ft.IconButton(icon=ft.Icons.SETTINGS,
                                   icon_color=ft.Colors.YELLOW_ACCENT_400,
@@ -226,13 +266,17 @@ def home_view(page: ft.Page):
             ),
 
             ft.Container(
+                ref=bg_container,
                 expand=True,
-                alignment=ft.Alignment(0, 0),
+                padding=0,
+                animate=ft.Animation(400, ft.AnimationCurve.EASE_IN_OUT),
+                gradient=get_gradient(),
                 content=ft.Column(
                     tight=True,
                     horizontal_alignment=ft.CrossAxisAlignment.CENTER,
                     scroll=ft.ScrollMode.ADAPTIVE,
                     controls=[
+                        ft.Container(height=24),
                         ft.Text(
                             "Зберіть свою гітару",
                             size=24,
@@ -253,6 +297,7 @@ def home_view(page: ft.Page):
                         ft.Container(height=8),
                         result_text,
                         order_btn,
+                        ft.Container(height=24),
                     ],
                 ),
             ),
@@ -267,7 +312,9 @@ def home_view(page: ft.Page):
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400),
+                            ft.Text("Guitar Custom", size=20,
+                                    weight=ft.FontWeight.BOLD,
+                                    color=ft.Colors.YELLOW_ACCENT_400),
                             ft.Row(
                                 controls=[
                                     ft.TextButton("Головна",
@@ -279,19 +326,19 @@ def home_view(page: ft.Page):
                                     ft.TextButton("Замовлення",
                                                   style=ft.ButtonStyle(color=ft.Colors.WHITE),
                                                   on_click=go_orders),
-                                ]
+                                ],
                             ),
                             ft.Row(
                                 controls=[
                                     ft.IconButton(icon=ft.Icons.FACEBOOK,
                                                   icon_color=ft.Colors.WHITE,
                                                   style=icon_button_STYLE,
-                                                  url='https://www.facebook.com/'),
-                                    ft.IconButton(icon=ft.Icons.MAIL,
+                                                  url="https://www.facebook.com/groups/1548580592066473/"),
+                                    ft.IconButton(icon=ft.Icons.PLAY_CIRCLE,
                                                   icon_color=ft.Colors.WHITE,
                                                   style=icon_button_STYLE,
-                                                  url='https://mail.google.com/'),
-                                ]
+                                                  url="https://www.youtube.com/@CrimsonCustomGuitars"),
+                                ],
                             ),
                         ],
                     ),
