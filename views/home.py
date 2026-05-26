@@ -5,6 +5,18 @@ from models.styles import *
 
 ORDERS_FILE = "orders.json"
 
+_DIR = os.path.dirname(os.path.dirname(__file__))
+with open(os.path.join(_DIR, "storage", "prices.json"), encoding="utf-8") as f:
+    PRICES = json.load(f)
+
+def calculate_price(model_key, wood, bridge, frets, color):
+    base = PRICES["guitars"][model_key]["base"]
+    w = PRICES["woods"].get(wood, 0)
+    b = PRICES["bridges"].get(bridge, 0)
+    f = PRICES["frets"].get(str(frets), 0)
+    c = PRICES["colors"].get(color, 0)
+    return base + w + b + f + c, {"base": base, "wood": w, "bridge": b, "frets": f, "color": c}
+
 
 def load_orders():
     if not os.path.exists(ORDERS_FILE):
@@ -22,7 +34,7 @@ def save_order(username, order):
         json.dump(all_orders, f, indent=4, ensure_ascii=False)
 
 
-def home_view(page: ft.Page):
+def home_view(page):
     bg_container = ft.Ref[ft.Container]()
 
     def get_gradient():
@@ -138,12 +150,14 @@ def home_view(page: ft.Page):
 
     GUITARS = load_data()
 
-    dd_wood   = ft.Dropdown(label="Деревина", options=[], width=340)
+    dd_wood = ft.Dropdown(label="Деревина", options=[], width=340)
     dd_bridge = ft.Dropdown(label="Бридж", options=[], width=340)
-    dd_frets  = ft.Dropdown(label="Кількість ладів", options=[], width=340)
-    dd_color  = ft.Dropdown(label="Колір", options=[], width=340)
+    dd_frets = ft.Dropdown(label="Кількість ладів", options=[], width=340)
+    dd_color = ft.Dropdown(label="Колір", options=[], width=340)
+    dd_shape = ft.Dropdown(label="Форма гітари", options=[ft.DropdownOption(k) for k in GUITARS], width=340)
 
     result_text = ft.Text("", text_align=ft.TextAlign.CENTER)
+    price_col = ft.Column(visible=False, spacing=4, horizontal_alignment=ft.CrossAxisAlignment.CENTER)
     selected = {"shape": None}
 
     order_btn = ft.Button(
@@ -172,67 +186,118 @@ def home_view(page: ft.Page):
                 f"✅ {selected['shape']} | {dd_wood.value} | "
                 f"{dd_bridge.value} | {dd_frets.value} ладів | {dd_color.value}"
             )
+            total, parts = calculate_price(
+                selected["shape"], dd_wood.value, dd_bridge.value, dd_frets.value, dd_color.value
+            )
+            price_col.controls = [
+                ft.Text(f"База ({selected['shape']}):  {parts['base']} ₴", size=13),
+                ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13),
+                ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13),
+                ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13),
+                ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13),
+                ft.Divider(height=8),
+                ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16,
+                        color=ft.Colors.YELLOW_ACCENT_400),
+            ]
+            price_col.visible = True
             order_btn.visible = True
         else:
+            price_col.visible = False
             order_btn.visible = False
         page.update()
 
+    dd_shape.on_select = on_shape_select
     dd_wood.on_select   = on_option_change
     dd_bridge.on_select = on_option_change
     dd_frets.on_select  = on_option_change
-    dd_color.on_select  = on_option_change
-
-    dd_shape = ft.Dropdown(
-        label="Форма гітари",
-        options=[ft.DropdownOption(k) for k in GUITARS],
-        on_select=on_shape_select,
-        width=340,
-    )
+    dd_color.on_select  = on_option_change 
 
     async def on_order_click(e):
         username = page.session.store.get("current_user")
         shape    = selected["shape"]
         img_src  = f"{shape}.jpg"
+        total, parts = calculate_price(shape, dd_wood.value, dd_bridge.value, dd_frets.value, dd_color.value)
 
-        order = {
-            "user":       username,
-            "shape":      shape,
-            "wood":       dd_wood.value,
-            "bridge":     dd_bridge.value,
-            "frets":      dd_frets.value,
-            "color":      dd_color.value,
-            "image_path": img_src,
-        }
-        save_order(username, order)
-
-        selected["shape"] = None
-        dd_shape.value = None
-        dd_wood.options = dd_bridge.options = dd_frets.options = dd_color.options = []
-        dd_wood.value = dd_bridge.value = dd_frets.value = dd_color.value = None
-        result_text.value = ""
-        order_btn.visible = False
-        page.update()
-
-        async def close(e):
-            img_dialog.open = False
+        async def close_confirm(e):
+            confirm_dialog.open = False
             page.update()
 
-        async def go_to_orders(e):
-            img_dialog.open = False
+        async def do_order(e):
+            confirm_dialog.open = False
             page.update()
-            await page.push_route("/orders")
 
-        img_dialog = ft.AlertDialog(
+            order = {
+                "user": username,
+                "shape": shape,
+                "wood": dd_wood.value,
+                "bridge": dd_bridge.value,
+                "frets": dd_frets.value,
+                "color": dd_color.value,
+                "image_path": img_src,
+            }
+            save_order(username, order)
+            selected["shape"] = None
+            dd_shape.value = None
+            dd_wood.options = dd_bridge.options = dd_frets.options = dd_color.options = []
+            dd_wood.value = dd_bridge.value = dd_frets.value = dd_color.value = None
+            result_text.value = ""
+            price_col.visible = False
+            order_btn.visible = False
+            page.update()
+
+            async def close(e):
+                img_dialog.open = False
+                page.update()
+
+            async def go_to_orders(e):
+                img_dialog.open = False
+                page.update()
+                await page.push_route("/orders")
+
+            img_dialog = ft.AlertDialog(
+                modal=True,
+                title=ft.Text("Замовлення прийнято! 🎸", color=ft.Colors.YELLOW_ACCENT_400),
+                content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень."),
+                actions=[
+                    ft.TextButton("Переглянути", on_click=go_to_orders),
+                    ft.TextButton("Закрити", on_click=close),
+                ],
+            )
+            page.overlay.append(img_dialog)
+            img_dialog.open = True
+            page.update()
+
+        confirm_dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text("Замовлення прийнято! 🎸", color=ft.Colors.YELLOW_ACCENT_400),
-            content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень."),
+            title=ft.Text(f"Підтвердити замовлення — {shape}", weight=ft.FontWeight.BOLD),
+            content=ft.Column(
+                width=360,
+                tight=True,
+                spacing=4,
+                controls=[
+                    ft.Text(f"База ({shape}):  {parts['base']} ₴", size=13),
+                    ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13),
+                    ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13),
+                    ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13),
+                    ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13),
+                    ft.Divider(height=8),
+                    ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16),
+                ],
+            ),
             actions=[
-                ft.TextButton("Переглянути", on_click=go_to_orders),
-                ft.TextButton("Закрити",     on_click=close),
+                ft.TextButton("Скасувати", on_click=close_confirm),
+                ft.FilledButton(
+                    "Підтвердити замовлення",
+                    style=ft.ButtonStyle(
+                        bgcolor=ft.Colors.YELLOW_ACCENT_400,
+                        color=ft.Colors.BLACK,
+                    ),
+                    on_click=do_order,
+                ),
             ],
         )
-        page.overlay.append(img_dialog)
-        img_dialog.open = True
+        page.overlay.append(confirm_dialog)
+        confirm_dialog.open = True
         page.update()
 
     order_btn.on_click = on_order_click
@@ -296,6 +361,7 @@ def home_view(page: ft.Page):
                         dd_color,
                         ft.Container(height=8),
                         result_text,
+                        price_col,
                         order_btn,
                         ft.Container(height=24),
                     ],
@@ -314,7 +380,8 @@ def home_view(page: ft.Page):
                         controls=[
                             ft.Text("Guitar Custom", size=20,
                                     weight=ft.FontWeight.BOLD,
-                                    color=ft.Colors.YELLOW_ACCENT_400),
+                                    color=ft.Colors.YELLOW_ACCENT_400,
+                                    font_family='AppleGaramond'),
                             ft.Row(
                                 controls=[
                                     ft.TextButton("Головна",
@@ -346,7 +413,7 @@ def home_view(page: ft.Page):
                     ft.Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500),
+                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500, font_family='AppleGaramond'),
                         ],
                     ),
                 ],

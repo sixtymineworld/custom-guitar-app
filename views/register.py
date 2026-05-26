@@ -2,6 +2,7 @@ import flet as ft
 import os
 import json
 import re
+import bcrypt
 from models.styles import *
 
 def register_view(page):
@@ -66,7 +67,8 @@ def register_view(page):
             if username in users_db:
                 message.value = "Користувач вже існує!"
             else:
-                users_db[username] = password
+                hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+                users_db[username] = hashed.decode('utf-8')
                 save_users(users_db)
                 await page.push_route("/login")
                 return

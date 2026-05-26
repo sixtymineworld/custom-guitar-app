@@ -23,7 +23,6 @@ def hero_view(page: ft.Page):
                     ft.Container(width=12),
                 ],
             ),
-
             ft.Stack(
                 expand=True,
                 controls=[
@@ -43,19 +42,24 @@ def hero_view(page: ft.Page):
                         ),
                     ),
                     ft.Container(
-                        alignment=ft.Alignment(0, 1),
-                        padding=ft.Padding(bottom=32),
-                        content=ft.Button(
+                        expand=True,
+                        alignment=ft.Alignment.BOTTOM_CENTER,
+                        padding=ft.Padding(left=0, top=0, right=0, bottom=48),
+                        content=ft.FilledButton(
                             "Перейти до реєстрації",
                             icon=ft.Icons.ARROW_FORWARD,
-                            style=btn_style,
                             on_click=go_register,
+                            style=ft.ButtonStyle(
+                                text_style=ft.TextStyle(size=18),
+                                bgcolor=ft.Colors.YELLOW_ACCENT_400,
+                                color=ft.Colors.BLACK,
+                                shape=ft.RoundedRectangleBorder(radius=12),
+                            ),
                         ),
                     ),
                 ],
             ),
         ],
-
         bottom_appbar=ft.BottomAppBar(
             **bottom_appbar_STYLE,
             content=ft.Column(
@@ -65,30 +69,18 @@ def hero_view(page: ft.Page):
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400),
+                            ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
                             ft.Row(
                                 controls=[
-                                    ft.TextButton("Головна",
-                                                  style=ft.ButtonStyle(color=ft.Colors.WHITE),
-                                                  ),
-                                    ft.TextButton("Каталог",
-                                                  style=ft.ButtonStyle(color=ft.Colors.WHITE),
-                                                  ),
-                                    ft.TextButton("Замовлення",
-                                                  style=ft.ButtonStyle(color=ft.Colors.WHITE),
-                                                  ),
+                                    ft.TextButton("Головна", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Каталог", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Замовлення", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
                                 ]
                             ),
                             ft.Row(
                                 controls=[
-                                    ft.IconButton(icon=ft.Icons.FACEBOOK,
-                                                  icon_color=ft.Colors.WHITE,
-                                                  style=icon_button_STYLE,
-                                                  url='https://www.facebook.com/groups/1548580592066473/'),
-                                    ft.IconButton(icon=ft.Icons.PLAY_CIRCLE,
-                                                  icon_color=ft.Colors.WHITE,
-                                                  style=icon_button_STYLE,
-                                                  url='https://www.youtube.com/@CrimsonCustomGuitars'),
+                                    ft.IconButton(icon=ft.Icons.FACEBOOK, icon_color=ft.Colors.WHITE, style=icon_button_STYLE, url='https://www.facebook.com/groups/1548580592066473/'),
+                                    ft.IconButton(icon=ft.Icons.PLAY_CIRCLE, icon_color=ft.Colors.WHITE, style=icon_button_STYLE, url='https://www.youtube.com/@CrimsonCustomGuitars'),
                                 ]
                             ),
                         ],
@@ -96,9 +88,7 @@ def hero_view(page: ft.Page):
                     ft.Divider(color=ft.Colors.GREY_700, height=16),
                     ft.Row(
                         alignment=ft.MainAxisAlignment.CENTER,
-                        controls=[
-                            ft.Text("© 2025 Custom Guitar")
-                        ],
+                        controls=[ft.Text("© 2025 Custom Guitar", font_family='AppleGaramond')],
                     ),
                 ],
             ),

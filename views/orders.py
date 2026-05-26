@@ -21,6 +21,8 @@ def save_orders(orders):
 def orders_view(page):
     async def go_home(e):
         await page.push_route("/home")
+    async def go_gallery(e):
+        await page.push_route("/gallery")
 
     username = page.session.store.get("current_user")
 
@@ -61,44 +63,56 @@ def orders_view(page):
                 img_control = ft.Container(
                     content=ft.Image(
                         src=img_src,
-                        width=260,
-                        height=260,
+                        width=160,
+                        height=160,
                         fit=ft.BoxFit.CONTAIN,
                     ),
+                    border_radius=10,
+                    clip_behavior=ft.ClipBehavior.ANTI_ALIAS,
                 )
 
-            card_controls = [
-                ft.Row(
-                    [
-                        ft.Text(
-                            f"Замовлення #{i + 1}",
-                            size=16,
-                            weight=ft.FontWeight.BOLD,
-                            color=ft.Colors.YELLOW_ACCENT_400,
-                            expand=True,
-                        ),
-                        ft.IconButton(
-                            icon=ft.Icons.DELETE_OUTLINE,
-                            icon_color=ft.Colors.RED_400,
-                            tooltip="Видалити замовлення",
-                            on_click=lambda e, idx=i: page.run_task(delete_order, idx),
-                        ),
-                    ]
-                ),
-                ft.Divider(height=4, color=ft.Colors.GREY_700),
-                ft.Text(f"Форма: {order.get('shape', '—')}", color=ft.Colors.WHITE),
-                ft.Text(f"Деревина: {order.get('wood', '—')}", color=ft.Colors.WHITE),
-                ft.Text(f"Бридж: {order.get('bridge', '—')}", color=ft.Colors.WHITE),
-                ft.Text(f"Лади: {order.get('frets', '—')}", color=ft.Colors.WHITE),
-                ft.Text(f"Колір: {order.get('color', '—')}", color=ft.Colors.WHITE),
-            ]
-
-            if img_control:
-                card_controls.append(img_control)
+            card_controls = ft.Row(
+                controls=[
+                    img_control if img_control else ft.Container(
+                        width=160, height=160, bgcolor="#2A2A2A", border_radius=10
+                    ),
+                    ft.Column(
+                        controls=[
+                            ft.Row(
+                                controls=[
+                                    ft.Text(
+                                        f"Замовлення #{i + 1}",
+                                        size=16,
+                                        weight=ft.FontWeight.BOLD,
+                                        color=ft.Colors.YELLOW_ACCENT_400,
+                                        expand=True,
+                                    ),
+                                    ft.IconButton(
+                                        icon=ft.Icons.DELETE_OUTLINE,
+                                        icon_color=ft.Colors.RED_400,
+                                        tooltip="Видалити замовлення",
+                                        on_click=lambda e, idx=i: page.run_task(delete_order, idx),
+                                    ),
+                                ]
+                            ),
+                            ft.Divider(height=4, color=ft.Colors.GREY_700),
+                            ft.Text(f"Форма: {order.get('shape', '—')}", color=ft.Colors.WHITE),
+                            ft.Text(f"Деревина: {order.get('wood', '—')}", color=ft.Colors.WHITE),
+                            ft.Text(f"Бридж: {order.get('bridge', '—')}", color=ft.Colors.WHITE),
+                            ft.Text(f"Лади: {order.get('frets', '—')}", color=ft.Colors.WHITE),
+                            ft.Text(f"Колір: {order.get('color', '—')}", color=ft.Colors.WHITE),
+                        ],
+                        spacing=6,
+                        expand=True,
+                    ),
+                ],
+                spacing=16,
+                vertical_alignment=ft.CrossAxisAlignment.START,
+            )
 
             cards.append(
                 ft.Container(
-                    content=ft.Column(card_controls, spacing=6),
+                    content=card_controls,
                     bgcolor=ft.Colors.GREY_900,
                     border_radius=12,
                     padding=16,
@@ -124,6 +138,11 @@ def orders_view(page):
                         ft.Icons.HOME,
                         icon_color=ft.Colors.YELLOW_ACCENT_400,
                         on_click=go_home,
+                    ),
+                    ft.IconButton(
+                        ft.Icons.MUSIC_NOTE,
+                        icon_color=ft.Colors.YELLOW_ACCENT_400,
+                        on_click=go_gallery,
                     )
                 ],
                 **appbar_STYLE,
