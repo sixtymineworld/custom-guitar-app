@@ -1,1 +1,22 @@
-{}
+{
+    "peek": [
+        {
+            "user": "peek",
+            "shape": "SG",
+            "wood": "Вільха",
+            "bridge": "Fixed Bridge",
+            "frets": "21",
+            "color": "Чорний",
+            "image_path": "SG.jpg"
+        },
+        {
+            "user": "peek",
+            "shape": "SG",
+            "wood": "Вільха",
+            "bridge": "Fixed Bridge",
+            "frets": "21",
+            "color": "Чорний",
+            "image_path": "SG.jpg"
+        }
+    ]
+}

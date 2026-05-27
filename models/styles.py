@@ -8,6 +8,7 @@ btn_style = ft.ButtonStyle(
     color=ft.Colors.BLACK,
     padding=12,
     shape=ft.RoundedRectangleBorder(radius=8),
+    
 )
 
 button_STYLE = ft.ButtonStyle(
@@ -30,14 +31,15 @@ textfield_STYLE = dict(
 text_STYLE = dict(
     weight=ft.FontWeight.BOLD,
     color="#FFD700",
-    font_family='Segoe UI',
+    font_family='CormonantGaramond'
+
 )
 
 error_text_STYLE = dict(
     size=12,
     weight=ft.FontWeight.W_900,
     color="#FF6F00",
-    font_family='Consolas',
+    font_family='CormonantGaramond'
 )
 
 icon_button_STYLE = ft.ButtonStyle(

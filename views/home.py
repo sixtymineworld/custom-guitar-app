@@ -256,8 +256,8 @@ def home_view(page):
 
             img_dialog = ft.AlertDialog(
                 modal=True,
-                title=ft.Text("Замовлення прийнято! 🎸", color=ft.Colors.YELLOW_ACCENT_400),
-                content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень."),
+                title=ft.Text("Замовлення прийнято! 🎸", font_family='CormonantGaramond'),
+                content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень.", font_family='CormonantGaramond'),
                 actions=[
                     ft.TextButton("Переглянути", on_click=go_to_orders),
                     ft.TextButton("Закрити", on_click=close),
@@ -269,19 +269,19 @@ def home_view(page):
 
         confirm_dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text(f"Підтвердити замовлення — {shape}", weight=ft.FontWeight.BOLD),
+            title=ft.Text(f"Підтвердити замовлення — {shape}", weight=ft.FontWeight.BOLD, font_family='CormonantGaramond'),
             content=ft.Column(
                 width=360,
                 tight=True,
                 spacing=4,
                 controls=[
-                    ft.Text(f"База ({shape}):  {parts['base']} ₴", size=13),
-                    ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13),
-                    ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13),
-                    ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13),
-                    ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13),
+                    ft.Text(f"База ({shape}):  {parts['base']} ₴", size=13, font_family='CormonantGaramond'),
+                    ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13, font_family='CormonantGaramond'),
+                    ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13, font_family='CormonantGaramond'),
+                    ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13, font_family='CormonantGaramond'),
+                    ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13, font_family='CormonantGaramond'),
                     ft.Divider(height=8),
-                    ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16),
+                    ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16, font_family='CormonantGaramond'),
                 ],
             ),
             actions=[
@@ -347,11 +347,13 @@ def home_view(page):
                             size=24,
                             weight=ft.FontWeight.BOLD,
                             color=ft.Colors.YELLOW_ACCENT_400,
+                            font_family='CormonantGaramond'
                         ),
                         ft.Text(
                             "Оберіть параметри нижче",
                             size=13,
                             color=ft.Colors.GREY_500,
+                            font_family='CormonantGaramond'
                         ),
                         ft.Container(height=16),
                         dd_shape,

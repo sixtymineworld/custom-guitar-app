@@ -137,12 +137,12 @@ def orders_view(page):
                     ft.IconButton(
                         ft.Icons.HOME,
                         icon_color=ft.Colors.YELLOW_ACCENT_400,
-                        on_click=go_home,
+                        on_click=go_gallery,
                     ),
                     ft.IconButton(
-                        ft.Icons.MUSIC_NOTE,
+                        ft.Icons.BACK_HAND,
                         icon_color=ft.Colors.YELLOW_ACCENT_400,
-                        on_click=go_gallery,
+                        on_click=go_home,
                     )
                 ],
                 **appbar_STYLE,
