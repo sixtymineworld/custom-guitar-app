@@ -256,8 +256,8 @@ def home_view(page):
 
             img_dialog = ft.AlertDialog(
                 modal=True,
-                title=ft.Text("Замовлення прийнято! 🎸", font_family='CormonantGaramond'),
-                content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень.", font_family='CormonantGaramond'),
+                title=ft.Text("Замовлення прийнято! 🎸", font_family='Text'),
+                content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень.", font_family='Text'),
                 actions=[
                     ft.TextButton("Переглянути", on_click=go_to_orders),
                     ft.TextButton("Закрити", on_click=close),
@@ -269,19 +269,19 @@ def home_view(page):
 
         confirm_dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text(f"Підтвердити замовлення — {shape}", weight=ft.FontWeight.BOLD, font_family='CormonantGaramond'),
+            title=ft.Text(f"Підтвердити замовлення — {shape}", weight=ft.FontWeight.BOLD, font_family='Text'),
             content=ft.Column(
                 width=360,
                 tight=True,
                 spacing=4,
                 controls=[
-                    ft.Text(f"База ({shape}):  {parts['base']} ₴", size=13, font_family='CormonantGaramond'),
-                    ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13, font_family='CormonantGaramond'),
-                    ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13, font_family='CormonantGaramond'),
-                    ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13, font_family='CormonantGaramond'),
-                    ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13, font_family='CormonantGaramond'),
+                    ft.Text(f"База ({shape}):  {parts['base']} ₴", size=13, font_family='Text'),
+                    ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13, font_family='Text'),
+                    ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13, font_family='Text'),
+                    ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13, font_family='Text'),
+                    ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13, font_family='Text'),
                     ft.Divider(height=8),
-                    ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16, font_family='CormonantGaramond'),
+                    ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16, font_family='Text'),
                 ],
             ),
             actions=[
@@ -308,7 +308,7 @@ def home_view(page):
         padding=0,
         controls=[
             ft.AppBar(
-                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
+                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='Title'),
                 **appbar_STYLE,
                 actions=[
                     ft.IconButton(icon=ft.Icons.SETTINGS,
@@ -347,13 +347,13 @@ def home_view(page):
                             size=24,
                             weight=ft.FontWeight.BOLD,
                             color=ft.Colors.YELLOW_ACCENT_400,
-                            font_family='CormonantGaramond'
+                            font_family='Text'
                         ),
                         ft.Text(
                             "Оберіть параметри нижче",
                             size=13,
                             color=ft.Colors.GREY_500,
-                            font_family='CormonantGaramond'
+                            font_family='Text'
                         ),
                         ft.Container(height=16),
                         dd_shape,
@@ -383,7 +383,7 @@ def home_view(page):
                             ft.Text("Guitar Custom", size=20,
                                     weight=ft.FontWeight.BOLD,
                                     color=ft.Colors.YELLOW_ACCENT_400,
-                                    font_family='AppleGaramond'),
+                                    font_family='Title'),
                             ft.Row(
                                 controls=[
                                     ft.TextButton("Головна",
@@ -415,7 +415,7 @@ def home_view(page):
                     ft.Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500, font_family='AppleGaramond'),
+                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500, font_family='Title'),
                         ],
                     ),
                 ],

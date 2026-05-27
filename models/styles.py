@@ -31,7 +31,7 @@ textfield_STYLE = dict(
 text_STYLE = dict(
     weight=ft.FontWeight.BOLD,
     color="#FFD700",
-    font_family='CormonantGaramond'
+    font_family='Text'
 
 )
 
@@ -39,7 +39,7 @@ error_text_STYLE = dict(
     size=12,
     weight=ft.FontWeight.W_900,
     color="#FF6F00",
-    font_family='CormonantGaramond'
+    font_family='Text'
 )
 
 icon_button_STYLE = ft.ButtonStyle(

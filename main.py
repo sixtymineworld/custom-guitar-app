@@ -6,8 +6,8 @@ async def main(page):
     saved_theme = await pref.get("theme")
     page.theme_mode = ft.ThemeMode.DARK if saved_theme == "dark" else ft.ThemeMode.LIGHT
     page.fonts = {
-        "AppleGaramond": "AppleGaramond.ttf",
-        "CormonantGaramond": "LibertinusSerifDisplay-Regular.ttf"
+        "Title": "AppleGaramond.ttf",
+        "Text": "PlayfairDisplaySC-Regular.ttf"
     }
 
     async def route_change(e):

@@ -155,8 +155,8 @@ def build_order_dialog(page, guitar):
 
         confirm_dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text("Замовлення прийнято! 🎸",  font_family='CormonantGaramond'),
-            content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень.",  font_family='CormonantGaramond'),
+            title=ft.Text("Замовлення прийнято! 🎸",  font_family='Text'),
+            content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень.",  font_family='Text'),
             actions=[
                 ft.TextButton("Переглянути", on_click=go_to_orders),
                 ft.TextButton("Закрити", on_click=close),
@@ -172,7 +172,7 @@ def build_order_dialog(page, guitar):
 
     dialog = ft.AlertDialog(
         modal=True,
-        title=ft.Text(f"Замовити — {guitar['name']}", weight=ft.FontWeight.BOLD, font_family='CormonantGaramond'),
+        title=ft.Text(f"Замовити — {guitar['name']}", weight=ft.FontWeight.BOLD, font_family='Text'),
         content=ft.Column(
             scroll=ft.ScrollMode.ADAPTIVE,
             width=360,
@@ -185,15 +185,15 @@ def build_order_dialog(page, guitar):
                 ft.Column(
                     spacing=4,
                     controls=[
-                        ft.Text(f"База ({guitar['name']}):  {parts['base']} ₴", size=13, font_family='CormonantGaramond'),
-                        ft.Text(f"Деревина ({fixed['wood']}): +{parts['wood']} ₴", size=13, font_family='CormonantGaramond'),
-                        ft.Text(f"Бридж ({fixed['bridge']}): +{parts['bridge']} ₴", size=13, font_family='CormonantGaramond'),
-                        ft.Text(f"Лади ({fixed['frets']}): +{parts['frets']} ₴", size=13, font_family='CormonantGaramond'),
-                        ft.Text(f"Колір ({fixed['color']}): +{parts['color']} ₴", size=13, font_family='CormonantGaramond'),
+                        ft.Text(f"База ({guitar['name']}):  {parts['base']} ₴", size=13, font_family='Text'),
+                        ft.Text(f"Деревина ({fixed['wood']}): +{parts['wood']} ₴", size=13, font_family='Text'),
+                        ft.Text(f"Бридж ({fixed['bridge']}): +{parts['bridge']} ₴", size=13, font_family='Text'),
+                        ft.Text(f"Лади ({fixed['frets']}): +{parts['frets']} ₴", size=13, font_family='Text'),
+                        ft.Text(f"Колір ({fixed['color']}): +{parts['color']} ₴", size=13, font_family='Text'),
                     ],
                 ),
                 ft.Divider(height=8),
-                ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16, font_family='CormonantGaramond'),
+                ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16, font_family='Text'),
             ],
             tight=True,
         ),
@@ -239,10 +239,9 @@ def guitar_card(guitar, page):
                         controls=[
                             ft.Text(
                                 guitar["name"],
-                                size=17,
-                                weight=ft.FontWeight.BOLD,
+                                size=20,
                                 color=ft.Colors.WHITE,
-                                font_family='CormonantGaramond'
+                                font_family='Title'
                             ),
                             ft.Text(
                                 guitar["desc"],
@@ -250,7 +249,7 @@ def guitar_card(guitar, page):
                                 color="#9E9E9E",
                                 max_lines=3,
                                 overflow=ft.TextOverflow.ELLIPSIS,
-                                font_family='CormonantGaramond'
+                                font_family='Text'
                             ),
                             ft.Divider(height=1, color="#2A2A2A"),
                             ft.Row(
@@ -370,7 +369,7 @@ def gallery_view(page):
 
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text("Налаштування", font_family='CormonantGaramond'),
+            title=ft.Text("Налаштування", font_family='Text'),
             content=ft.Column(
                 [
                     theme_switch,
@@ -404,7 +403,7 @@ def gallery_view(page):
         controls=[
             ft.AppBar(
                 **appbar_STYLE,
-                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
+                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='Title'),
                 actions=[
                     ft.Button(
                         'Створити свою',
@@ -435,8 +434,8 @@ def gallery_view(page):
                     scroll=ft.ScrollMode.ADAPTIVE,
                     expand=True,
                     controls=[
-                        ft.Text("Форми гітар", size=28, weight=ft.FontWeight.BOLD, font_family='CormonantGaramond'),
-                        ft.Text("Обери форму та дізнайся її історію", size=14, font_family='CormonantGaramond'),
+                        ft.Text("Форми гітар", size=28, weight=ft.FontWeight.BOLD, font_family='Text'),
+                        ft.Text("Обери форму та дізнайся її історію", size=14, font_family='Text'),
                         ft.Container(height=16),
                         cards,
                     ],
@@ -453,7 +452,7 @@ def gallery_view(page):
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,
                         controls=[
                             ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD,
-                                    color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
+                                    color=ft.Colors.YELLOW_ACCENT_400, font_family='Title'),
                             ft.Row(controls=[
                                 ft.TextButton("Головна",
                                               style=ft.ButtonStyle(color=ft.Colors.WHITE),
@@ -483,7 +482,7 @@ def gallery_view(page):
                     ft.Row(
                         alignment=ft.MainAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500, font_family='AppleGaramond'),
+                            ft.Text("© 2026 Guitar Custom", size=11, color=ft.Colors.GREY_500, font_family='Title'),
                         ],
                     ),
                 ],
