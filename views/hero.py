@@ -1,5 +1,6 @@
 import flet as ft
 from models.styles import *
+from models.auth import *
 
 
 def hero_view(page: ft.Page):
@@ -10,6 +11,17 @@ def hero_view(page: ft.Page):
     async def go_login(e):
         await page.push_route("/login")
 
+    async def go_gallery(e):
+        await page.push_route("/gallery")
+    
+    async def go_orders(e):
+        if not check_auth_and_show_dialog(page):
+            return
+        await page.push_route("/orders")
+
+    async def go_hero(e):
+        await page.push_route("/")
+
     return ft.View(
         route="/",
         bgcolor=ft.Colors.TRANSPARENT,
@@ -17,7 +29,7 @@ def hero_view(page: ft.Page):
         controls=[
             ft.AppBar(
                 **appbar_STYLE,
-                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
+                title=ft.Text("Guitar Custom", color=ft.Colors.YELLOW_ACCENT_400, font_family='Title'),
                 actions=[
                     ft.TextButton("Увійти", style=button_STYLE, on_click=go_login),
                     ft.Container(width=12),
@@ -49,12 +61,7 @@ def hero_view(page: ft.Page):
                             "Перейти до реєстрації",
                             icon=ft.Icons.ARROW_FORWARD,
                             on_click=go_register,
-                            style=ft.ButtonStyle(
-                                text_style=ft.TextStyle(size=18),
-                                bgcolor=ft.Colors.YELLOW_ACCENT_400,
-                                color=ft.Colors.BLACK,
-                                shape=ft.RoundedRectangleBorder(radius=12),
-                            ),
+                            style=btn_style
                         ),
                     ),
                 ],
@@ -63,18 +70,18 @@ def hero_view(page: ft.Page):
         bottom_appbar=ft.BottomAppBar(
             **bottom_appbar_STYLE,
             content=ft.Column(
-                spacing=8,
+                spacing=5,
                 controls=[
                     ft.Row(
                         alignment=ft.MainAxisAlignment.SPACE_BETWEEN,
                         vertical_alignment=ft.CrossAxisAlignment.CENTER,
                         controls=[
-                            ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400, font_family='AppleGaramond'),
+                            ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD, color=ft.Colors.YELLOW_ACCENT_400, font_family='Title'),
                             ft.Row(
                                 controls=[
-                                    ft.TextButton("Головна", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                    ft.TextButton("Каталог", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                    ft.TextButton("Замовлення", style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                    ft.TextButton("Головна", style=bars_buttons, on_click=go_hero),
+                                    ft.TextButton("Каталог", style=bars_buttons, on_click=go_gallery),
+                                    ft.TextButton("Замовлення", style=bars_buttons, on_click=go_orders),
                                 ]
                             ),
                             ft.Row(
@@ -88,7 +95,7 @@ def hero_view(page: ft.Page):
                     ft.Divider(color=ft.Colors.GREY_700, height=16),
                     ft.Row(
                         alignment=ft.MainAxisAlignment.CENTER,
-                        controls=[ft.Text("© 2025 Custom Guitar", font_family='AppleGaramond')],
+                        controls=[ft.Text("© 2026 Custom Guitar", font_family='Title', color=ft.Colors.WHITE)],
                     ),
                 ],
             ),

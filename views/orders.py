@@ -96,11 +96,12 @@ def orders_view(page):
                                 ]
                             ),
                             ft.Divider(height=4, color=ft.Colors.GREY_700),
-                            ft.Text(f"Форма: {order.get('shape', '—')}", color=ft.Colors.WHITE),
-                            ft.Text(f"Деревина: {order.get('wood', '—')}", color=ft.Colors.WHITE),
-                            ft.Text(f"Бридж: {order.get('bridge', '—')}", color=ft.Colors.WHITE),
-                            ft.Text(f"Лади: {order.get('frets', '—')}", color=ft.Colors.WHITE),
-                            ft.Text(f"Колір: {order.get('color', '—')}", color=ft.Colors.WHITE),
+                            ft.Text(f"Форма: {order.get('shape', '—')}", color=ft.Colors.WHITE, font_family='Text'),
+                            ft.Text(f"Деревина: {order.get('wood', '—')}", color=ft.Colors.WHITE, font_family='Text'),
+                            ft.Text(f"Бридж: {order.get('bridge', '—')}", color=ft.Colors.WHITE, font_family='Text'),
+                            ft.Text(f"Лади: {order.get('frets', '—')}", color=ft.Colors.WHITE, font_family='Text'),
+                            ft.Text(f"Колір: {order.get('color', '—')}", color=ft.Colors.WHITE, font_family='Text'),
+                            ft.Text(f"Ціна: {order.get('total', '—')} ₴", color=ft.Colors.YELLOW_ACCENT_400, font_family='Text'),
                         ],
                         spacing=6,
                         expand=True,
@@ -132,7 +133,7 @@ def orders_view(page):
         route="/orders",
         controls=[
             ft.AppBar(
-                title=ft.Text("Мої замовлення", color=ft.Colors.YELLOW_ACCENT_400),
+                title=ft.Text("Мої замовлення", color=ft.Colors.YELLOW_ACCENT_400, font_family='Text'),
                 actions=[
                     ft.IconButton(
                         ft.Icons.HOME,
@@ -140,7 +141,7 @@ def orders_view(page):
                         on_click=go_gallery,
                     ),
                     ft.IconButton(
-                        ft.Icons.BACK_HAND,
+                        ft.Icons.ARROW_BACK,
                         icon_color=ft.Colors.YELLOW_ACCENT_400,
                         on_click=go_home,
                     )

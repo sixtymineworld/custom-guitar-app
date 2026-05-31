@@ -8,6 +8,7 @@ btn_style = ft.ButtonStyle(
     color=ft.Colors.BLACK,
     padding=12,
     shape=ft.RoundedRectangleBorder(radius=8),
+    text_style=ft.TextStyle(font_family="Text"),
     
 )
 
@@ -16,6 +17,7 @@ button_STYLE = ft.ButtonStyle(
     color=ft.Colors.YELLOW_ACCENT_400,
     padding=12,
     side=ft.BorderSide(2, ft.Colors.YELLOW_ACCENT_700),
+    text_style=ft.TextStyle(font_family="Text"),
 )
 
 textfield_STYLE = dict(
@@ -78,4 +80,9 @@ SOFT_BG_GRADIENT = ft.Container(
         ],
         stops=[0.0, 0.2, 0.4, 0.6, 0.8, 1.0],
     ),
+)
+
+bars_buttons = ft.ButtonStyle(
+    text_style=ft.TextStyle(font_family="Text"),
+    color=ft.Colors.YELLOW_ACCENT_400
 )

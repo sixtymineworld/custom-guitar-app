@@ -7,7 +7,7 @@ async def main(page):
     page.theme_mode = ft.ThemeMode.DARK if saved_theme == "dark" else ft.ThemeMode.LIGHT
     page.fonts = {
         "Title": "AppleGaramond.ttf",
-        "Text": "PlayfairDisplaySC-Regular.ttf"
+        "Text": "Prata-Regular.ttf"
     }
 
     async def route_change(e):
@@ -16,7 +16,9 @@ async def main(page):
 
         is_auth = page.session.store.get("authenticated")
 
-        if not is_auth and current_route not in ("/", "/login", "/register"):
+        public_routes = ["/", "/login", "/register", "/gallery"]
+        
+        if not is_auth and current_route not in public_routes:
             await page.push_route("/login")
             return
 
@@ -34,11 +36,11 @@ async def main(page):
         elif current_route == "/orders":
             page.views.append(orders_view(page))
         else:
-            page.views.append(login_view(page))
+            page.views.append(hero_view(page))
 
         page.update()
 
-    async def view_pop(e: ft.ViewPopEvent):
+    async def view_pop(e):
         if len(page.views) > 1:
             page.views.pop()
             top_view = page.views[-1]
@@ -50,4 +52,5 @@ async def main(page):
     initial_route = page.route if page.route else "/"
     await route_change(initial_route)
 
-ft.run(main, assets_dir="assets", view=ft.AppView.WEB_BROWSER)
+if __name__ == '__main__':
+    ft.run(main, assets_dir="assets", view=ft.AppView.WEB_BROWSER)

@@ -1,6 +1,7 @@
 import flet as ft
 import json
 from models.styles import *
+from models.auth import *
 import os
 
 ORDERS_FILE = "orders.json"
@@ -141,6 +142,8 @@ def build_order_dialog(page, guitar):
             "frets": fixed["frets"],
             "color": fixed["color"],
             "image_path": guitar["src"],
+            "total": total,
+            "parts": parts,
         }
         save_order(username, order)
 
@@ -158,8 +161,8 @@ def build_order_dialog(page, guitar):
             title=ft.Text("Замовлення прийнято! 🎸",  font_family='Text'),
             content=ft.Text("Вашу гітару успішно створено. Переглянути його можна в розділі замовлень.",  font_family='Text'),
             actions=[
-                ft.TextButton("Переглянути", on_click=go_to_orders),
-                ft.TextButton("Закрити", on_click=close),
+                ft.TextButton("Переглянути", on_click=go_to_orders, style=bars_buttons),
+                ft.TextButton("Закрити", on_click=close, style=bars_buttons),
             ],
         )
         page.overlay.append(confirm_dialog)
@@ -201,10 +204,7 @@ def build_order_dialog(page, guitar):
             ft.TextButton("Скасувати", on_click=close),
             ft.FilledButton(
                 "Підтвердити замовлення",
-                style=ft.ButtonStyle(
-                    bgcolor=ft.Colors.YELLOW_ACCENT_400,
-                    color=ft.Colors.BLACK,
-                ),
+                style=btn_style,
                 on_click=confirm,
             ),
         ],
@@ -214,6 +214,9 @@ def build_order_dialog(page, guitar):
 
 def guitar_card(guitar, page):
     async def open_buy(e):
+        if not await check_auth_and_show_dialog(page):
+            return
+            
         dialog = build_order_dialog(page, guitar)
         page.overlay.append(dialog)
         dialog.open = True
@@ -260,24 +263,14 @@ def guitar_card(guitar, page):
                                         icon=ft.Icons.PLAY_CIRCLE_OUTLINE_ROUNDED,
                                         url=guitar["youtube"],
                                         expand=1,
-                                        style=ft.ButtonStyle(
-                                            color="#FFD600",
-                                            side=ft.BorderSide(1, "#FFD600"),
-                                            shape=ft.RoundedRectangleBorder(radius=10),
-                                            padding=12,
-                                        ),
+                                        style=button_STYLE
                                     ),
                                     ft.FilledButton(
                                         "Купити",
                                         icon=ft.Icons.SHOPPING_CART_ROUNDED,
-                                        on_click=open_buy,
+                                        on_click=open_buy,  # Тепер з перевіркою
                                         expand=1,
-                                        style=ft.ButtonStyle(
-                                            bgcolor="#FFD600",
-                                            color=ft.Colors.BLACK,
-                                            shape=ft.RoundedRectangleBorder(radius=10),
-                                            padding=12,
-                                        ),
+                                        style=btn_style
                                     ),
                                 ],
                             ),
@@ -329,6 +322,8 @@ def gallery_view(page):
         await page.push_route("/home")
     
     async def go_orders(e):
+        if not await check_auth_and_show_dialog(page):
+            return
         await page.push_route("/orders")
 
     async def go_hero(e):
@@ -418,10 +413,12 @@ def gallery_view(page):
                         tooltip="Налаштування",
                         on_click=show_settings_dialog,
                     ),
-                    ft.IconButton(icon=ft.Icons.SHOPPING_BASKET,
-                                  icon_color=ft.Colors.YELLOW_ACCENT_400,
-                                  tooltip="Ваші замовлення",
-                                  on_click=go_orders),
+                    ft.IconButton(
+                        icon=ft.Icons.SHOPPING_BASKET,
+                        icon_color=ft.Colors.YELLOW_ACCENT_400,
+                        tooltip="Ваші замовлення",
+                        on_click=go_orders,
+                    ),
                     ft.Container(width=12),
                 ],
             ),
@@ -454,13 +451,9 @@ def gallery_view(page):
                             ft.Text("Guitar Custom", size=20, weight=ft.FontWeight.BOLD,
                                     color=ft.Colors.YELLOW_ACCENT_400, font_family='Title'),
                             ft.Row(controls=[
-                                ft.TextButton("Головна",
-                                              style=ft.ButtonStyle(color=ft.Colors.WHITE),
-                                              on_click=go_hero),
-                                ft.TextButton("Каталог",
-                                              style=ft.ButtonStyle(color=ft.Colors.WHITE)),
-                                ft.TextButton("Замовлення",
-                                              style=ft.ButtonStyle(color=ft.Colors.WHITE)),
+                                ft.TextButton("Головна", style=bars_buttons, on_click=go_hero),
+                                ft.TextButton("Каталог", style=bars_buttons),
+                                ft.TextButton("Замовлення", style=bars_buttons, on_click=go_orders),
                             ]),
                             ft.Row(controls=[
                                 ft.IconButton(

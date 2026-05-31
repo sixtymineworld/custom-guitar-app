@@ -2,30 +2,39 @@
     "peek": [
         {
             "user": "peek",
-            "shape": "SG",
-            "wood": "Вільха",
+            "shape": "Telecaster",
+            "wood": "Ясен",
             "bridge": "Fixed Bridge",
-            "frets": "21",
-            "color": "Чорний",
-            "image_path": "SG.jpg"
-        },
+            "frets": "22",
+            "color": "Блакитний",
+            "image_path": "Telecaster.jpg",
+            "total": 8000,
+            "parts": {
+                "base": 7500,
+                "wood": 300,
+                "bridge": 0,
+                "frets": 0,
+                "color": 200
+            }
+        }
+    ],
+    "null": [
         {
-            "user": "peek",
-            "shape": "SG",
+            "user": null,
+            "shape": "Les Paul",
             "wood": "Вільха",
             "bridge": "Fixed Bridge",
             "frets": "21",
             "color": "Чорний",
-            "image_path": "SG.jpg"
-        },
-        {
-            "user": "peek",
-            "shape": "Stratocaster",
-            "wood": "Вільха",
-            "bridge": "Fixed Bridge",
-            "frets": "21",
-            "color": "Чорний",
-            "image_path": "Stratocaster.jpg"
+            "image_path": "Les-Paul.jpg",
+            "total": 12000,
+            "parts": {
+                "base": 12000,
+                "wood": 0,
+                "bridge": 0,
+                "frets": 0,
+                "color": 0
+            }
         }
     ]
 }

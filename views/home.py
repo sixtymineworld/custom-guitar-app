@@ -105,7 +105,7 @@ def home_view(page):
 
         dialog = ft.AlertDialog(
             modal=True,
-            title=ft.Text("Налаштування"),
+            title=ft.Text("Налаштування", font_family='Text'),
             content=ft.Column(
                 [
                     theme_switch,
@@ -156,7 +156,7 @@ def home_view(page):
     dd_color = ft.Dropdown(label="Колір", options=[], width=340)
     dd_shape = ft.Dropdown(label="Форма гітари", options=[ft.DropdownOption(k) for k in GUITARS], width=340)
 
-    result_text = ft.Text("", text_align=ft.TextAlign.CENTER)
+    result_text = ft.Text("", text_align=ft.TextAlign.CENTER, font_family='Text')
     price_col = ft.Column(visible=False, spacing=4, horizontal_alignment=ft.CrossAxisAlignment.CENTER)
     selected = {"shape": None}
 
@@ -190,14 +190,14 @@ def home_view(page):
                 selected["shape"], dd_wood.value, dd_bridge.value, dd_frets.value, dd_color.value
             )
             price_col.controls = [
-                ft.Text(f"База ({selected['shape']}):  {parts['base']} ₴", size=13),
-                ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13),
-                ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13),
-                ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13),
-                ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13),
+                ft.Text(f"База ({selected['shape']}):  {parts['base']} ₴", size=13, font_family='Text'),
+                ft.Text(f"Деревина ({dd_wood.value}): +{parts['wood']} ₴", size=13, font_family='Text'),
+                ft.Text(f"Бридж ({dd_bridge.value}): +{parts['bridge']} ₴", size=13, font_family='Text'),
+                ft.Text(f"Лади ({dd_frets.value}): +{parts['frets']} ₴", size=13, font_family='Text'),
+                ft.Text(f"Колір ({dd_color.value}): +{parts['color']} ₴", size=13, font_family='Text'),
                 ft.Divider(height=8),
                 ft.Text(f"Разом: {total} ₴", weight=ft.FontWeight.BOLD, size=16,
-                        color=ft.Colors.YELLOW_ACCENT_400),
+                        color=ft.Colors.YELLOW_ACCENT_400, font_family='Text'),
             ]
             price_col.visible = True
             order_btn.visible = True
@@ -207,10 +207,10 @@ def home_view(page):
         page.update()
 
     dd_shape.on_select = on_shape_select
-    dd_wood.on_select   = on_option_change
+    dd_wood.on_select = on_option_change
     dd_bridge.on_select = on_option_change
-    dd_frets.on_select  = on_option_change
-    dd_color.on_select  = on_option_change 
+    dd_frets.on_select = on_option_change
+    dd_color.on_select = on_option_change 
 
     async def on_order_click(e):
         username = page.session.store.get("current_user")
@@ -234,6 +234,8 @@ def home_view(page):
                 "frets": dd_frets.value,
                 "color": dd_color.value,
                 "image_path": img_src,
+                "total": total,
+                "parts": parts,
             }
             save_order(username, order)
             selected["shape"] = None
